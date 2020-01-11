@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <link rel="stylesheet" href="../index/css/comment.css">
+    <script src="../index/jquery-2.1.1.min.js"></script>
+    <script src="../index/layui/layui.js"></script>
+    <style type="text/css">
+
+        .nav{
+            width: 100%;
+            height: 80px;
+            border-bottom: 2px solid #c2c2c2;
+        }
+        .nav-one{
+            width:6%;
+            height: 80px;
+            float: left;
+        }
+        .nav-two{
+            width:44%;
+            height:80px;
+            float: left;
+        }
+
+
+        .nav-tree{
+            width: 50%;
+            height: 80px;
+            float: left;
+
+        }
+        .nav-tree ul{
+            margin-left:25%;
+        }
+        .nav-tree li{
+            width:auto;
+            height:80px;
+            float:left;
+            list-style:none;
+            line-height:80px;
+            padding:0 10px;
+
+        }
+        .nav-tree li a{
+
+            color: black;
+        }
+        .nav-tree li:hover{
+            background: #FF00FF;
+
+        }
+        .nav-tree li a:hover{
+            color: #FFFFFF;
+
+        }
+
+        .guan{
+            width:40%;
+            margin:0 auto ;
+            height: 80px;
+        }
+        .guan .guan-user{
+            width:70%;
+            height: 80px;
+            float: left;
+        }
+
+        .guan .guan-button{
+            width:30%;
+            height: 80px;
+            float: left;
+        }
+        .guan .guan-buttons{
+            width:40%;
+            margin:0 auto ;
+            height:80px;
+            line-height:80px;
+        }
+        .guan button{
+            width:70px;
+            height: 40px;
+            line-height:40px;
+            color: #fff;
+            background: #c2c2c2;
+            border:1px ;
+            border-radius: 8px;
+        }
+
+
+        #dianzan:hover{
+
+            cursor: pointer;
+        }
+        #img{
+
+            text-align: center;
+        }
+        #img img{
+            width:480px;
+            height:300px;
+            border-radius: 8px;
+        }
+        .text {
+            text-align: center;
+        }
+        .text textarea{
+            width:50%;
+            height:80px;
+        }
+        .ping{
+
+            text-align: center;
+            padding-bottom:30px;
+        }
+        .img{
+            width: 50px;
+            height: 50px;
+            margin-top:10px;
+            float: left;
+        }
+        .img img{
+            width:30px;
+            height:30px;
+            border-radius:50%;
+        }
+        .ping button{
+            width: 100px;
+            height: 50px;
+            border: 0;
+            background: #FF00FF;
+            color: #FFFFFF;
+            border-radius: 8px;
+            font-size: 18px;
+        }
+        .dands{
+
+            text-align: center;
+        }
+        .dands button{
+
+            width:80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 0;
+            background-color: #f8f8f8 !important;
+        }
+        .dands button:hover{
+            cursor: pointer;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="nav">
+        <div class="nav-one">
+
+        </div>
+        <div class="nav-two">
+
+        </div>
+        <div class="nav-tree">
+            <uL>
+                <li><a href="">成为房东/体验达人</a> </li>
+                <li><a href="">故事</a> </li>
+                <li><a href="">历史足迹</a> </li>
+                <li><a href="">帮助</a> </li>
+                <li><a href="">注册</a> </li>
+                <li><a href="">登陆</a> </li>
+            </uL>
+        </div>
+
+    </div>
+    <div class="guan">
+        <div class="guan-user"></div>
+        <div class="guan-button">
+            <div class="guan-buttons">
+            <button type="button">关注</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="story" style="margin:0 auto;width:40%;height: auto;margin-top:2%">
+
+    </div>
+
+    <div id="div" style="margin:0 auto;width:40%;margin-top:10%"></div>
+
+    <div class="pinglun" style="margin:0 auto;width:40%;height: auto">
+
+
+    </div>
+    <div style="height:50px">
+
+    </div>
+
+        <input type="hidden" id="id" th:value="${param?.id}">
+</body>
+<script type="text/javascript">
+
+    $(function () {
+
+        queryStoryById();
+        queryPinglun();
+
+    });
+
+    function  queryStoryById() {
+        var id = $("#id").val();
+         $.ajax({
+                 url:'../queryStoryById',
+                 type:'get',
+                 data:{id:id},
+                 success:function (data) {
+
+                     var content = "";
+
+                         content+="<div id='img'><img src="+data.img+"></div>";
+                         content+="<div><span style='font-weight: bold'>"+data.title+"</span></div>";
+                         content+="<div style='margin-top: 15px'><span>"+data.content+"</span></div>";
+                     content+="<div style='margin-top: 15px' class='text'><textarea id='content' placeholder='赶快来评论吧……'></textarea></div>";
+                     content+="<div style='margin-top: 15px' class='ping'><button type='button' onclick='addPinglun()'>回复</button></div>";
+                     content+="<div class='dands'>"
+                     content+="<button type='button'  >点赞</button>"
+                     content+="<button type='button'  onclick='addCollect()' >收藏</button></div>"
+                     $(".story").html(content);
+
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+    }
+
+    /*收藏开始*/
+    addCollect=function () {
+        var id = $("#id").val();
+         $.ajax({
+                 url:'../addCollect',
+                 type:'get',
+                 data:{storyId:id},
+                 success:function (data) {
+
+                     if (data == 1) {
+                         location.href = "/toViewName?viewName=logins";
+                     }else if(data==2){
+                         alert("请不要重复收藏");
+
+                     }else{
+                         alert("收藏成功");
+                     }
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+
+
+    }
+    /*收藏结束*/
+
+    function addPinglun() {
+        var id = $("#id").val();
+        var content = $("#content").val();
+        if (content == null | content == "") {
+           alert("内容不能为空");
+            return;
+        }
+         $.ajax({
+                 url:'/addPinglun',
+                 type:'get',
+                 data:{sotyId:id,content:content},
+                 success:function (data) {
+
+                     if (data == 1) {
+
+
+                         location.href = "/toViewName?viewName=logins";
+                     }else if (data == 2) {
+                         alert("留言成功");
+                         $("#content").val("");
+                         queryPinglun();
+                     }else{
+
+                         alert("每个人只能评论三条");
+                         $("#content").val("");
+                     }
+
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 });
+
+
+    }
+
+    function  queryPinglun() {
+        var id = $("#id").val();
+         $.ajax({
+                 url:'../queryPinglun',
+                 type:'get',
+                 data:{sotyId:id},
+                 success:function (data) {
+
+                     console.log(data);
+                     console.log(data.length);
+                     var conentts="<div><span style='color:blue'>"+data.length+"条评论</span></div>";
+                     var content = "";
+                     for (var i = 0; i <data.length ; i++) {
+                         content += "<div class='show'>";
+                         content += "<div class='comment-show-con clearfix'>";
+                         content += "<div class='comment-show-con-img pull-left'><img src=" + data[i].img + "></div>";
+                         content += "<div class='comment-show-con-list pull-left clearfix'>";
+                         content += "<div class='pl-text clearfix'>";
+                         content += "<a href='#' class='comment-size-name'>"+data[i].userName+" </a>";
+                         content += "<span class='my-pl-con'>"+data[i].content+"</span>";
+                         content += "</div>";
+                         content += "<div class='date-dz'>";
+                         content += "<span class='date-dz-left pull-left comment-time'>"+data[i].createTime+"</span>";
+                         content += "<div class='date-dz-right pull-right comment-pl-block'>";
+                         content +="<a class='removeBlock' href='javascript:deletePinglun(\""+data[i].id+"\")'>删除</a>";
+                         content += "<a href='javascript:queryHuifu(\""+data[i].id+"\");' class='date-dz-pl pl-hf hf-con-block pull-left'>回复</a>";
+                         content += "<span class='pull-left date-dz-line'>|</span>";
+                         content += "<a href='javascript:updateLike(\""+data[i].id+"\","+data[i].like+");' class='date-dz-z pull-left'><i class='date-dz-z-click-red'></i>赞"+data[i].like+"</a>";
+                         content += "</div>";
+                         content += "</div>";
+                         content += "<div class='hf-list-con'></div>";
+                         content += "</div>";
+                         content += "</div>";
+                         content += "</div>";
+
+                     }
+                     $('#div').html(conentts);
+                     $('.pinglun').html(content);
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+
+    }
+
+    /*删除评论*/
+   function  deletePinglun(id) {
+         $.ajax({
+                 url:'../deletePinglun',
+                 type:'get',
+                 data:{id:id},
+                 success:function (data) {
+
+                     queryPinglun();
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+
+    }
+    /*结束*/
+
+    /*function updateLike(id,like) {
+        console.log(id, like);
+
+         $.ajax({
+                 url:'../addPinglun',
+                 data:{id:id,like:like},
+                 success:function (data) {
+
+                     if (data == 1) {
+                         alert("请先登陆在点赞");
+                     }else{
+                         location.reload();
+                     }
+
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+    }*/
+
+
+</script>
+</html>

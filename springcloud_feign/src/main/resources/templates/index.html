@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <link rel="stylesheet" href="../index/css/layui.css">
+    <link rel="stylesheet" href="../index/css/main.css">
+    <script src="../index/jquery-2.1.1.min.js"></script>
+    <script src="../laydate/laydate.js"></script>
+
+    <script>
+        lay('#version').html('-v'+ laydate.v);
+        /*日期范围*/
+        laydate.render({
+            elem: '#test6'
+            ,range: true
+        });
+    </script>
+    <style>
+        .es{width:70%;margin: 0 auto;height:70px;background: #FFF;top: 100px;position:absolute;left:15%;top:50%;border-radius:5px}
+        .es div{float: left;width:auto;height:70px; }
+        .es .house{width:100px;height:70px;text-align: center;line-height: 70px;border-right:1px solid #c2c2c2}
+        .es .text{width:560px;height: 70px;text-align: center;line-height: 70px;border-right:1px solid #c2c2c2}
+        .es .text input{font-weight: bold;width:400px;height:24px;border:0}
+        .es .date{width:300px;height: 70px;border-right:1px solid #c2c2c2;text-align: center;line-height: 70px}
+        .es .date input{border:0}
+        .es .sou{width:99px;height: 70px;text-align: center;line-height: 70px;}
+        .es .sou button{width:68px;background:#FF00FF;height: 48px;border:0;border-radius:5px;color: #fff}
+
+        /*日期样式*/
+        .demo-input{padding-left: 10px; height: 38px; min-width: 262px; line-height: 38px; border: 1px solid #e6e6e6;  background-color: #fff;  border-radius: 2px;}
+        /*结束*/
+    </style>
+
+
+</head>
+<body>
+    <div class="site-nav-bg">
+        <div class="site-nav w1200">
+            <p class="sn-back-home">
+                <i class="layui-icon layui-icon-home"></i>
+                <a href="#">首页</a>
+            </p>
+            <div class="sn-quick-menu">
+                <div class="login">
+                    <a href="/toViewName?viewName=logins">登录</a>
+                    <a href="">注册</a>
+                    <a href="/toViewName?viewName=center">个人中心</a>
+                </div>
+            </div>
+            <!--导航开始-->
+            <div class="main-nav">
+                <div class="inner-cont0">
+                    <div class="inner-cont1 w1200">
+                        <div class="inner-cont2">
+                            <a href="">出租房源</a>
+                            <a href="" class="active">开展体验</a>
+                            <a href="">故事</a>
+                            <a href="">帮助</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--导航结束-->
+        </div>
+    </div>
+
+    <div class="content content-nav-base buytoday-content">
+        <div id="list-cont">
+
+            <div class="banner-box">
+                <div class="banner">
+
+                    <div class="es">
+                        <div class="house">房源</div>
+                        <div class="text"><input type="text" id="content" placeholder="请输入搜索内容"></div>
+                        <div class="date"><input type="text" class="demo-input" placeholder="日期范围" id="test6"></div>
+                        <div class="sou"><button type="button" onclick="initContent()">搜索</button></div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="product-list-box">
+
+                <div class="product-list w1200">
+                    <!--滚动导航div开始-->
+
+                    <div class="tab-title">
+                        <div class="active">
+                            <a href="javascript:;"  >上海</a>
+                        </div>
+                        <div class="active">
+                            <a href="javascript:;" >西安</a>
+                        </div>
+                        <div class="active">
+                            <a href="javascript:;" >北京</a>
+                        </div>
+                        <div class="active">
+                            <a href="javascript:;" >郑州</a>
+                        </div>
+                        <div class="active">
+                            <a href="javascript:;" >深圳</a>
+                        </div>
+                        <div class="active">
+                            <a href="javascript:;" >上海</a>
+                        </div>
+                        <div class="active">
+                            <a href="javascript:;" >广州</a>
+                        </div>
+                    </div>
+
+                    <!--滚动导航div结束-->
+                    <div class="list-cont">
+                        <div class="item-box layui-clear">
+
+                        </div>
+
+                    </div>
+                    <!--开始-->
+                    <div><span style="color: blue;font-weight: bold;font-size:18px">精彩旅行故事</span></div>
+                    <div class="story" >
+                        <div class="layui-story">
+
+
+
+                        </div>
+
+                    </div>
+                    <!--结束-->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript">
+
+    $(function () {
+        queryContent();
+        queryStory();
+    });
+
+
+    var demo=document.getElementById("dh_li");
+    function move_right(){
+        if(dh_li.scrollLeft<=(1500-800))
+            dh_li.scrollLeft+=160;
+    }
+    function move_left() {
+        if (dh_li.scrollLeft >= 0)
+            dh_li.scrollLeft -= 160;
+
+    }
+
+    //条查
+    function initContent(){
+        var content = $("#content").val();
+        queryContent(content);
+
+    }
+
+    function queryContent(content) {
+
+        if (content != undefined) {
+            $.ajax({
+                url:'../search?content='+content,
+                type:'get',
+                success:function (data) {
+
+                    console.log(data);
+
+                    var content = "";
+                    for (var i = 0; i < data.length; i++) {
+                        var discount=(data[i].cuprice/data[i].orprice)*10;
+                        content += "<div class='item'>";
+                        content += "<a href='javascript:queryHouse("+data[i].id+")'><img src="+data[i].img+" ></a>";
+                        content += "<div class='text-box'>";
+                        content += "<a href='javascript:queryHouse("+data[i].id+")'><p class='title'>"+data[i].content+"</p></a>";
+                        content += "  <p class='plic'> <span class='ciur-pic'>￥"+data[i].cuprice+"</span>";
+                        content += "<span class='Ori-pic'>￥"+data[i].orprice+"</span>  <span class='Ori-pic'>每晚</span>";
+                        content += " <span class='discount'>"+discount+"折</span>";
+                        content += "  </p></div> </div>";
+                        console.log(discount);
+                    }
+
+                    $(".layui-clear").html(content);
+
+                },error:function () {
+                    alert("ajax访问失败,请查看控制台");
+                }
+
+            });
+        }else{
+            $.ajax({
+                url:'../search',
+                type:'get',
+                success:function (data) {
+
+
+
+                    var content = "";
+                    for (var i = 0; i < data.length; i++) {
+                        var discount=(data[i].cuprice/data[i].orprice)*10;
+                        content += "  <div class='item'>";
+                        content += "<a href='javascript:queryHouse("+data[i].id+")'><img src="+data[i].img+" ></a>";
+                        content += "<div class='text-box'>";
+                        content += "<a href='javascript:queryHouse("+data[i].id+")'><p class='title'>"+data[i].content+"</p></a>";
+                        content += "  <p class='plic'> <span class='ciur-pic'>￥"+data[i].cuprice+"</span>";
+                        content += "<span class='Ori-pic'>￥"+data[i].orprice+"</span>  <span class='Ori-pic'>每晚</span>";
+                        content += " <span class='discount'>"+discount+"折</span>";
+                        content += "  </p></div> </div>";
+                    }
+
+
+                    $(".layui-clear").html(content);
+
+                },error:function () {
+                    alert("ajax访问失败,请查看控制台");
+                }
+
+            });
+
+        }
+
+    }
+
+    function  queryHouse(id) {
+        location.href = "/toViewName?viewName=house&id="+id;
+
+    }
+
+
+    function queryStory() {
+
+         $.ajax({
+                 url:'/find',
+                 type:'get',
+                 success:function (data) {
+                     console.log(data);
+                     var content = "";
+                     for (var i = 0; i <data.length ; i++) {
+
+                         content+="<div class='items'>";
+                         content+="<a href='javascript:queryStoryById("+data[i].id+")'><img src="+data[i].img+"></a>";
+                         content+="<div class='content'>";
+                         content+="<span class='place'>广州</span>";
+                         content+="<span class='describe'>"+data[i].title+"</span>";
+                         content+="</div>";
+                         content+="</div>";
+                     }
+
+                     $(".layui-story").html(content);
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+
+    }
+
+    function  queryStoryById(id) {
+
+        location.href = "/toViewName?viewName=story&id="+id;
+    }
+
+
+</script>
+</html>

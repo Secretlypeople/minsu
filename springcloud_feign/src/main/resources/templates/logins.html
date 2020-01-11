@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <link rel="stylesheet" href="../index/css/common.css">
+    <link rel="stylesheet" href="../index/css/login.css">
+    <script src="../index/jquery-2.1.1.min.js"></script>
+
+
+</head>
+<body >
+<div class="login_cont">
+    <div class="login_nav">
+        <div class="nav_slider">
+            <a href="#" class="signin">登录</a>
+            <a href="#" class="signup focus">注册</a>
+
+        </div>
+    </div>
+    <form id="add_form">
+        <div class="input_signup active">
+            <input class="input" name="username" id="usernames" type="text"  placeholder="用户名">
+            <input class="input" name="email" type="text" aria-label="邮箱" placeholder="邮箱">
+            <input class="input" name="phone" id="phone" type="text"   placeholder="手机号">
+            <input class="input" name="userpassword" id="userpasswords" type="password" aria-label="密码" placeholder="密码">
+            <input class="input" id="affuserpassword" type="password" aria-label="密码" placeholder="再次输入密码">
+            <button onclick="register()" type="button" class="button">注册</button>
+        </div>
+    </form>
+        <div class="input_signin">
+            <input class="input" id="username" type="text"  placeholder="用户名">
+            <div class="hint">请输入用户名</div>
+            <input class="input" id="userpassword" type="password"  placeholder="密码">
+            <div class="hint">请输入密码</div>
+            <input type="text"   id="imgcode" placeholder="请输入验证码" >
+            <img id="img" src="/getCodeName">
+            <a href="javascript:next()">换一换</a>
+            <button onclick="login()" type="button" class="button">登陆</button>
+            <div class="forget">
+                <a href="forget.html">忘记密码？</a>
+            </div>
+        </div>
+</div>
+<script src="../index/js/login.js"></script>
+</body>
+<script type="text/javascript">
+
+    function  login() {
+
+        var username = $("#username").val();
+        var userpassword = $("#userpassword").val();
+        var imgcode = $("#imgcode").val();
+        $.ajax({
+            url:'../logins',
+            type:'get',
+            data:{
+                username:username,
+                userpassword:userpassword,
+                imgcode:imgcode
+            },
+            success:function (data) {
+
+                if (data.code !=3) {
+                    alert(data.msg);
+                }else{
+                    alert(data.msg);
+                    location.href = "/toViewName?viewName=index";
+
+                }
+
+            },error:function () {
+                alert("ajax访问失败,请查看控制台");
+            }
+
+        })
+    }
+
+    function  register() {
+
+        var usernames = $("#usernames").val();
+        var userpasswords = $("#userpasswords").val();
+        var affuserpassword = $("#affuserpassword").val();
+        var phone = $("#phone").val();
+        if (usernames == null || usernames == "") {
+            alert("用户名不能为空");
+            return;
+        }
+        if (userpasswords == null || userpasswords == "") {
+            alert("密码不能为空");
+            return;
+        }
+        if (affuserpassword != userpasswords) {
+            alert("两次密码不一致");
+            return;
+        }
+        if(phone==null||phone==""){
+            alert("手机号码不能为空");
+            return;
+        }else if(!(/^1[3456789]\d{9}$/.test(phone))){
+            alert("手机号码有误，请重填");
+            $("#phone").val("");
+            return ;
+        }
+
+         $.ajax({
+                 url:'/registers',
+                 data:$("#add_form").serialize(),
+                 success:function (data) {
+
+                     alert("注册成功");
+                     location.reload();
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 });
+
+    }
+
+    /*加上时间戳来重复请求验证码函数  */
+    function next(){
+        $('#img').attr('src', '/getCodeName?t=' + new Date().getTime());
+    }
+</script>
+</html>
