@@ -1,6 +1,7 @@
 package com.jk.service;
 
 import com.jk.dto.Content;
+import com.jk.dto.Story;
 import com.jk.dto.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,15 @@ public class HomeServieError implements HomeServiceFeign {
         return null;
     }
 
+    @Override
+    public List<Story> queryStory() {
+        return null;
+    }
 
+    @Override
+    public Story queryStoryById(Integer id) {
+        return null;
+    }
 
 
 }

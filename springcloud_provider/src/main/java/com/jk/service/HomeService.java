@@ -1,6 +1,7 @@
 package com.jk.service;
 
 import com.jk.dto.Content;
+import com.jk.dto.Story;
 import com.jk.dto.User;
 
 import java.util.List;
@@ -13,4 +14,7 @@ public interface HomeService {
 
     String register(User user);
 
+    List<Story> queryStory();
+
+    Story queryStoryById(Integer id);
 }

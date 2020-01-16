@@ -3,6 +3,7 @@ package com.jk.controller;
 import com.alibaba.fastjson.JSON;
 import com.jk.dto.Content;
 import com.jk.dto.Order;
+import com.jk.dto.Story;
 import com.jk.dto.User;
 import com.jk.service.HomeService;
 import com.jk.service.HomeServices;
@@ -38,6 +39,21 @@ public class HomeController implements  HomeServices {
         return "success";
     }
 
+    @Override
+    @GetMapping("queryStory")
+    public List<Story> queryStory() {
+
+            List<Story> list = homeService.queryStory();
+            return list;
+    }
+
+    @Override
+    public Story queryStoryById(Integer id) {
+
+        return homeService.queryStoryById(id);
+    }
+
+
     @RabbitListener(queues = "1906-wyh")
     public void receiveMethod(String message){
         System.out.println(message);
@@ -50,6 +66,8 @@ public class HomeController implements  HomeServices {
         System.out.println(order);
 
     }
+
+
 
 
 }

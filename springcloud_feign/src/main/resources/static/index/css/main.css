@@ -1,0 +1,73 @@
+*{margin:0;padding:0;}
+.nav{width: 100%;height:80px;background: rgba(0,0,25,0.2);}
+.nav ul{width: 40%;margin: 0 auto;height: 80px;line-height: 80px;}
+.nav li{float: left;width:auto;}
+.nav a{color:#fff;font-size: 16px;padding: 0 25px;}
+
+
+
+.w1200{width: 1200px; margin:0 auto;}
+
+
+/*滚动div开始*/
+.tab-title{
+    width:90%;
+    margin:0 auto ;
+    text-align: center;
+}
+.tab-title .active{
+
+    float: left;
+    width: 120px;
+    height:48px;
+    margin:0 10px ;
+    background: #FFFFFF;
+    border:1px solid #9f9f9f;
+    border-radius:5px;
+    line-height: 20px;
+}
+.active a{
+    font-weight: bold;
+}
+/*滚动div结束*/
+
+/*轮播*/
+.buytoday-content .banner{height: 380px; background: url(../img/tuan_img_banner.jpg) no-repeat; position: relative;cursor: pointer;}
+
+.buytoday-content .product-list-box{background: #f8f8f8; padding-bottom: 50px;}
+.buytoday-content .product-list .tab-title{padding:60px 0 66px 0;}
+.buytoday-content .product-list .tab-title a{line-height: 56px; color: #666666; font-size: 20px; display: inline-block;}
+.buytoday-content .product-list .tab-title a.tuang{margin-right: 70px;}
+.buytoday-content .product-list .tab-title a.active{color: #693ca4; border-bottom: 2px solid #cfb2f6;}
+/*轮播结束*/
+
+
+/*内容开始*/
+.buytoday-content .list-cont .item{width:290px; height:380px;float: left; margin:0 12px 20px 0; text-align: left; background: #fff;}
+.buytoday-content .list-cont .item-box{width:1220px;padding-bottom: 30px;}
+.buytoday-content .list-cont .item .text-box{ padding:12px; box-sizing: border-box;}
+.buytoday-content .list-cont .item .text-box .title{line-height:24px; font-size: 16px; color:#000000; margin-bottom: 6px;}
+.buytoday-content .list-cont .item .text-box .plic{position: relative;}
+.item:hover {cursor:pointer;}
+img{width:290px;height:250px;border-radius: 8px;}
+
+
+/*精彩故事*/
+ .layui-story{width:1220px;margin-top:20px}
+ .layui-story .items{width:290px; height:auto;float:left;margin:0 12px 20px 0;text-align: left;background: #fff; }
+.items img{width:290px;height:250px}
+.content .place{font-weight: bold}
+.content .describe{margin:0 5px;}
+/*结束*/
+
+
+
+
+
+
+
+
+
+
+
+

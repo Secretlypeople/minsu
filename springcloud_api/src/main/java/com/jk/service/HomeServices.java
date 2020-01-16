@@ -1,6 +1,7 @@
 package com.jk.service;
 
 import com.jk.dto.Content;
+import com.jk.dto.Story;
 import com.jk.dto.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,12 @@ public interface HomeServices {
 
     @PostMapping("register")
     String register(@RequestBody User user);
+
+    @GetMapping("queryStory")
+    List<Story> queryStory();
+
+    @GetMapping("queryStoryById")
+    Story queryStoryById(@RequestParam("id") Integer id);
 
 
 }

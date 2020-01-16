@@ -1,8 +1,7 @@
 package com.jk.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.jk.dto.Content;
-import com.jk.dto.Order;
+import com.jk.dto.Story;
 import com.jk.dto.User;
 import com.jk.repository.HomeRepository;
 import com.jk.service.HomeServiceFeign;
@@ -207,6 +206,20 @@ public class HomeController {
         }*/
         serviceFeign.register(user);
         return "success";
+    }
+
+    @GetMapping("queryStorys")
+    public List<Story> queryStorys() {
+
+
+        return serviceFeign.queryStory();
+    }
+
+    @GetMapping("queryStoryByIds")
+    public Story queryStoryByIds(Integer id) {
+
+        Story story = serviceFeign.queryStoryById(id);
+        return story;
     }
 
 

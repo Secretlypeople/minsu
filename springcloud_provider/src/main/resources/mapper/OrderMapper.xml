@@ -23,5 +23,19 @@
         insert into t_user(username,userpassword,phone,email) values(#{username},#{userpassword},#{phone},#{email})
     </insert>
 
+    <!--List<Story> queryStory();-->
+    <select id="queryStory" resultType="com.jk.dto.Story">
+
+        select * from t_story
+    </select>
+
+    <!--Story queryStoryById(Integer id);-->
+    <select id="queryStoryById" resultType="com.jk.dto.Story" parameterType="java.lang.Integer">
+        select t.*,tu.username username,tu.img userImg from t_story t
+        left join t_user tu on tu.userId=t.userId
+        where t.id=#{id}
+
+    </select>
+
 
 </mapper>

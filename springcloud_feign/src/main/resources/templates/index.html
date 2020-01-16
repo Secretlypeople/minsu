@@ -27,6 +27,17 @@
         .es .sou{width:99px;height: 70px;text-align: center;line-height: 70px;}
         .es .sou button{width:68px;background:#FF00FF;height: 48px;border:0;border-radius:5px;color: #fff}
 
+        .zero{
+            width: 1220px;
+            height:300px;
+            line-height:300px;
+            text-align: center;
+        }
+        .zero span{
+            font-size: 18px;
+            font-weight: bold;
+            color: #0f88eb;
+        }
         /*日期样式*/
         .demo-input{padding-left: 10px; height: 38px; min-width: 262px; line-height: 38px; border: 1px solid #e6e6e6;  background-color: #fff;  border-radius: 2px;}
         /*结束*/
@@ -35,42 +46,23 @@
 
 </head>
 <body>
-    <div class="site-nav-bg">
-        <div class="site-nav w1200">
-            <p class="sn-back-home">
-                <i class="layui-icon layui-icon-home"></i>
-                <a href="#">首页</a>
-            </p>
-            <div class="sn-quick-menu">
-                <div class="login">
-                    <a href="/toViewName?viewName=logins">登录</a>
-                    <a href="">注册</a>
-                    <a href="/toViewName?viewName=center">个人中心</a>
-                </div>
-            </div>
-            <!--导航开始-->
-            <div class="main-nav">
-                <div class="inner-cont0">
-                    <div class="inner-cont1 w1200">
-                        <div class="inner-cont2">
-                            <a href="">出租房源</a>
-                            <a href="" class="active">开展体验</a>
-                            <a href="">故事</a>
-                            <a href="">帮助</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--导航结束-->
-        </div>
-    </div>
 
+    <!--导航结束-->
     <div class="content content-nav-base buytoday-content">
         <div id="list-cont">
 
             <div class="banner-box">
                 <div class="banner">
-
+                    <!--导航开始-->
+                    <nav class="nav">
+                        <ul>
+                        <li><a href="" >首页</a></li>
+                        <li class="deng"></li>
+                        <li class="zhu"></li>
+                        <li><a href="javascript:presionCenter()" >个人中心</a></li>
+                        <li><a href="" >联系我们</a></li>
+                        </ul>
+                    </nav>
                     <div class="es">
                         <div class="house">房源</div>
                         <div class="text"><input type="text" id="content" placeholder="请输入搜索内容"></div>
@@ -136,26 +128,31 @@
 
         </div>
     </div>
-
 </body>
 <script type="text/javascript">
 
     $(function () {
         queryContent();
         queryStory();
+        var userId = "[[${session.user.userId}]]";
+        var username = "[[${session.user.username}]]";
+        if (userId == 0) {
+            $(".nav .deng ").html("<a href='/toViewName?viewName=logins'>"+username+"</a>");
+            $(".nav .zhu ").html("<a href='/toViewName?viewName=logins'>注册</a>");
+        }else{
+            $(".nav .deng ").html("<a>欢迎你:<span style='color: blue'>"+username+"</span></a>");
+            $(".nav .zhu ").html("<a href='/toViewName?viewName=logins'>退出登录</a>");
+        }
     });
-
-
-    var demo=document.getElementById("dh_li");
-    function move_right(){
-        if(dh_li.scrollLeft<=(1500-800))
-            dh_li.scrollLeft+=160;
+    presionCenter=function () {
+        var userId = "[[${session.user.userId}]]";
+        if (userId==-1) {
+            location.href = "/toViewName?viewName=logins";
+        }else{
+            location.href = "/toViewName?viewName=center";
+        }
     }
-    function move_left() {
-        if (dh_li.scrollLeft >= 0)
-            dh_li.scrollLeft -= 160;
 
-    }
 
     //条查
     function initContent(){
@@ -172,23 +169,29 @@
                 type:'get',
                 success:function (data) {
 
-                    console.log(data);
+                    if (data.length == 0) {
+                        var conent = "";
+                        conent += "<div class='zero'><span>换个词试试吧</span></div>";
+                        $(".layui-clear").html(conent);
+                    }else{
 
-                    var content = "";
-                    for (var i = 0; i < data.length; i++) {
-                        var discount=(data[i].cuprice/data[i].orprice)*10;
-                        content += "<div class='item'>";
-                        content += "<a href='javascript:queryHouse("+data[i].id+")'><img src="+data[i].img+" ></a>";
-                        content += "<div class='text-box'>";
-                        content += "<a href='javascript:queryHouse("+data[i].id+")'><p class='title'>"+data[i].content+"</p></a>";
-                        content += "  <p class='plic'> <span class='ciur-pic'>￥"+data[i].cuprice+"</span>";
-                        content += "<span class='Ori-pic'>￥"+data[i].orprice+"</span>  <span class='Ori-pic'>每晚</span>";
-                        content += " <span class='discount'>"+discount+"折</span>";
-                        content += "  </p></div> </div>";
-                        console.log(discount);
+                        var content = "";
+                        for (var i = 0; i < data.length; i++) {
+                            var discount=(data[i].cuprice/data[i].orprice)*10;
+                            content += "<div class='item'>";
+                            content += "<a href='javascript:queryHouse("+data[i].id+")'><img src="+data[i].img+" ></a>";
+                            content += "<div class='text-box'>";
+                            content += "<a href='javascript:queryHouse("+data[i].id+")'><p class='title'>"+data[i].content+"</p></a>";
+                            content += "  <p class='plic'> <span class='ciur-pic'>￥"+data[i].cuprice+"</span>";
+                            content += "<span class='Ori-pic'>￥"+data[i].orprice+"</span>  <span class='Ori-pic'>每晚</span>";
+                            content += " <span class='discount'>"+discount+"折</span>";
+                            content += "  </p></div> </div>";
+                            console.log(discount);
+                        }
+
+                        $(".layui-clear").html(content);
                     }
 
-                    $(".layui-clear").html(content);
 
                 },error:function () {
                     alert("ajax访问失败,请查看控制台");
@@ -200,8 +203,6 @@
                 url:'../search',
                 type:'get',
                 success:function (data) {
-
-
 
                     var content = "";
                     for (var i = 0; i < data.length; i++) {
@@ -238,10 +239,9 @@
     function queryStory() {
 
          $.ajax({
-                 url:'/find',
+                 url:'../queryStorys',
                  type:'get',
                  success:function (data) {
-                     console.log(data);
                      var content = "";
                      for (var i = 0; i <data.length ; i++) {
 

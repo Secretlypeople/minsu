@@ -3,13 +3,14 @@ package com.jk.dto;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "t_collect")
-public class Collect {
+public class Collect {//收藏列表
 
     private String id;
     private String classify;//分类
     private String title;//标题
     private String createTime;//创建时间
-    private String storyId;//精选故事id
+    private Integer storyId;//精选故事id
+    private Integer userId;
 
     public String getId() {
         return id;
@@ -43,12 +44,20 @@ public class Collect {
         this.createTime = createTime;
     }
 
-    public String getStoryId() {
+    public Integer getStoryId() {
         return storyId;
     }
 
-    public void setStoryId(String storyId) {
+    public void setStoryId(Integer storyId) {
         this.storyId = storyId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -58,7 +67,8 @@ public class Collect {
                 ", classify='" + classify + '\'' +
                 ", title='" + title + '\'' +
                 ", createTime='" + createTime + '\'' +
-                ", storyId='" + storyId + '\'' +
+                ", storyId=" + storyId +
+                ", userId=" + userId +
                 '}';
     }
 }
