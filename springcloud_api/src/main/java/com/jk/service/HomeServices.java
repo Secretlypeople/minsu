@@ -3,14 +3,10 @@ package com.jk.service;
 import com.jk.dto.Content;
 import com.jk.dto.Story;
 import com.jk.dto.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.jk.dto.UserInfo;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
 
 public interface HomeServices {
 
@@ -28,6 +24,22 @@ public interface HomeServices {
 
     @GetMapping("queryStoryById")
     Story queryStoryById(@RequestParam("id") Integer id);
+
+    @GetMapping("queryMywork")
+     List<Story> queryMyworks(@RequestParam("userId")Integer userId);
+
+    @GetMapping("queryInstall")
+    UserInfo queryInstall(@RequestParam("userId")Integer userId);
+
+    @PutMapping("upateInstall")
+    void upateSigcard(@RequestBody UserInfo userInfo);
+
+    @PutMapping("upateEmail")
+    void upateEmail(@RequestBody UserInfo userInfo);
+
+    @PutMapping("upatePhone")
+    void upatePhone(@RequestBody UserInfo userInfo);
+
 
 
 }

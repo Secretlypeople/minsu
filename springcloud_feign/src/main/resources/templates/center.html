@@ -4,61 +4,22 @@
     <meta charset="UTF-8"/>
     <title>个人中心</title>
     <link rel="stylesheet" href="../index/css/sidebar.css">
+    <script src="../index/jquery-2.1.1.min.js"></script>
+
     <style>
-        .collect{
-            width:60%;
-            background: #FFFFFF;
-            top:10%;
-            border-radius: 8px;
-            position:fixed;
-            right: 10%;
-        }
-        .collect-delall{
-            width: 100%;
-            height: 80px;
-            line-height: 80px;
-            border-bottom: 1px solid #c2c2c2;
-
-        }
-        .collect-delall a{
-            text-decoration: none;
-            color: #000000;
-            margin-left: 75%;
-        }
-        .collect-count{
-            height: 50px;
-            line-height: 50px;
-            border-bottom: 1px solid #01AAED;
-        }
-        .collect-count .classify{
-            width: 15%;
-            float: left;
-        }
-        .collect-count  .title{
-            width:50%;
-            float: left;
-        }
-        .collect-count .time{
-            width: 25%;
-            float: left;
-        }
-        .collect-count .del{
-            width: 10%;
-            float: left;
-        }
-
         .collect-count  .title a, .collect-count .del a{text-decoration: none;color: black}
-        .collect-count  .title a:hover, .collect-count .del a:hover,.collect-delall a:hover{color: #FF00FF}
+
+
     </style>
 </head>
 
 <body>
-<div id="wrapper" style="left:0;">
+<div id="wrapper">
     <!-- 侧边栏 -->
     <div class="sidebar">
         <div class="headSculpture">
-            <img src="../index/img/headSculpture.jpg" alt="">
-            <p>昵称：粉红色少女</p>
+            <!--<img th:src="${session.user.img}">-->
+            <p>昵称:<span th:text="${session.user.username}"></span></p>
         </div>
         <div class="option">
             <ul>
@@ -66,13 +27,13 @@
                     <p><a href="/toViewName?viewName=index">首页</a></p>
                 </li>
                 <li><img src="../index/img/collection.png" alt="">
-                    <p>我的作品</p>
+                    <p><a href="javascript:queryMyworks()">我的作品</a></p>
                 </li>
                 <li><img src="../index/img/collection.png" alt="">
-                    <p>发布作品</p>
+                    <p><a href="javascript:addWorks()">发布作品</a></p>
                 </li>
                 <li><img src="../index/img/collection.png" alt="">
-                    <p>我的关注</p>
+                    <p><a href="javascript:myFocus()">我的关注</a></p>
                 </li>
                 <li><img src="../index/img/collection.png" alt="">
                     <p><a href="">浏览足迹</a></p>
@@ -81,23 +42,18 @@
                     <p><a href="javascript:queryCollect()">我的收藏</a></p>
                 </li>
                 <li><img src="../index/img/collection.png" alt="">
-                    <p>设置</p>
+                    <p><a href="javascript:queryInstall() ">设置</a></p>
                 </li>
             </ul>
         </div>
     </div>
-    <!-- 侧边栏按钮 -->
-    <button></button>
     <!-- 内容区域 -->
-    <div class="banner">
-        <div class="collect">
+    <div class="collect">
 
 
-        </div>
     </div>
 </div>
-<script src="../index/jquery-2.1.1.min.js"></script>
-<script src="../index/js/sidebar.js"></script>
+
 </body>
 <script>
 
@@ -108,27 +64,39 @@
                  type:'get',
                  success:function (data) {
 
-                     console.log(data);
+
+                     var conent="";
+
+
                      if (data.length == 0) {
-                         var conent="";
-                         conent += "<div style='height:250px;text-align: center;line-height: 250px'><span style='font-size: 18px;color:#0000ff'>暂无收藏内容哦</span></div>";
+                         conent += "<div   id='enshrine'>";
+                         conent += "<div   class='title'><h2>你共有<span>"+data.length+"</span>条收藏</h2></div>";
+                         conent += "</div>";
                          $(".collect").html(conent);
                      }else{
+                         conent += "<div   id='enshrine'>";
+                         conent += "<div   class='title'><h2>你共有<span>"+data.length+"</span>条收藏</h2></div>";
 
-                         var cotent = "";
-                         cotent += "<div class='collect-delall'><a href='javascript:deleteAllCollect()'>一键清除</a></div>";
+                         conent += "<div   class='push'><strong><a href='javascript:deleteAllCollect()'>一键清除</a></strong></div>";
                          for (var i = 0; i <data.length ; i++) {
 
-                             cotent += "<div class='collect-count'>";
-                             cotent += "<div class='classify'>"+data[i]. classify+"</div>";
-                             cotent += "<div class='title'><a href='javascript:querySoty("+data[i].storyId+")'>"+data[i]. title+"</a></div>";
+                             conent += "<div class='collect-count'>";
+                             conent += "<div class='classify'><span>" + data[i].classify + "</span></div>";
+                             conent += "<div class='title'><span><a href='javascript:querySoty(" + data[i].storyId + ")'>" + data[i].title + "</a></span></div>";
 
-                             cotent += "<div class='time'>"+data[i]. createTime+"</div>";
-                             cotent += "<div class='del'><a href='javascript:delteCollect(\""+data[i].id+"\")'>删除</a></div>";
-                             cotent += "</div>";
+                             conent += "<div class='footer'>";
+                             conent += " <strong>收藏于:</strong><span class='tim'>"+ data[i].createTime + "</span>";
+
+                             conent += "<span class='del'><a href='javascript:delteCollect(\"" + data[i].id + "\")'>删除</a></span>";
+                             conent += "</div>";
+                             conent += "</div>";
+
                          }
-                         $(".collect").html(cotent);
+                         conent += "</div>";
+                         $(".collect").html(conent);
                      }
+
+
 
 
                  },error:function () {
@@ -176,5 +144,210 @@
                  })
 
     };
+
+    /*我的关注开始*/
+    myFocus = function () {
+        var userId = "[[${session.user.userId}]]";
+        $.ajax({
+            url:'/queryMyFocus',
+            type:'get',
+            data:{myUserId:userId},
+            success:function (data) {
+                console.log(data);
+                var conent="";
+                if (data.length == 0) {
+                    conent += "<div class='works'>";
+                    conent += "<div class='title'><h2>您关注了<span>"+data.length+"</span>位</h2></div>" ;
+                    conent += "</div>";
+                    $(".collect").html(conent);
+                }else{
+
+                    $(".collect").html(conent);
+                }
+
+
+            },error:function () {
+                alert("ajax访问失败,请查看控制台");
+            }
+
+        })
+    };
+    /*我的关注结束*/
+    queryMyworks=function () {
+
+        var userId = "[[${session.user.userId}]]";
+         $.ajax({
+                 url:'/queryMyworks',
+                 type:'get',
+                 data:{userId:userId},
+                 success:function (data) {
+                     console.log(data);
+                         var conent="";
+                     if (data.length == 0) {
+                         conent += "<div class='works'>";
+                         conent += "<div class='title'><h2>您共发布<span>"+data.length+"</span>部作品</h2></div>" ;
+                         conent += "</div>";
+                         $(".collect").html(conent);
+                     }else{
+                         conent += "<div class='works'>";
+                         conent += "<div class='title'><h2>您共发布<span>"+data.length+"</span>部作品</h2></div>" ;
+
+                         for (var i = 0; i <data.length ; i++) {
+                             conent += "<div class='issue'>";
+                             conent += "<div class='title'><strong>标题:</strong><span>"+data[i].title+"</span></div>";
+                             conent += "<div class='tim'><strong>发表于:</strong><span>"+data[i].createTime+"</span></div>";
+                             conent += "</div>";
+                         }
+                         conent += "</div>";
+                         $(".collect").html(conent);
+                     }
+
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+    }
+
+    queryInstall=function () {
+
+        var userId = "[[${session.user.userId}]]";
+         $.ajax({
+                 url:'/queryInstalls?userId='+userId,
+                 type:'get',
+                 success:function (data) {
+                     console.log(data);
+                     var content = "";
+                     content+="<div id='jbzlMod'>";
+                     content+= "<div class='title'><h2>基本资料</h2></div>";
+                     content+= "<div class='tex'>";
+                     content+= "<p><strong>昵称:</strong><span>"+data.userName+"</span></p>";
+                     content+= "<p ><strong>图片:</strong><img class='images' src="+data.img+"></p>";
+                     content+= "<p><strong>签名:</strong>";
+                     if (data.sigcard == null) {
+                         content+= "<a id='not' href='javascript:upateSigcard("+data.userId+")'>还没有签名哦</a></p>";
+                     }else{
+                         content+= "<span>"+data.sigcard+"</span></p>";
+                     }
+
+                     content+= "<p><strong>手机号:</strong>";
+                     if (data.phone == null) {
+                         content+= "<a id='not' href='javascript:upatePhone("+data.userId+")'>未绑定</a></p>";
+
+                     }else{
+                         var showPhone =  data.phone.replace(/^(\d{3})\d{4}(\d+)/,"$1****$2")
+                         content+= "<span>"+showPhone+"</span></p>";
+                     }
+
+                     content+= "<p><strong>邮箱:</strong>";
+                     if (data.email == null) {
+                         content+= "<a id='not' href='javascript:upateEmail("+data.userId+")'>未绑定</a></p>";
+                     }else{
+                         var showPhone =  data.email.replace(/^(\d{4})\d{5}(\d+)/,"$1*****$2")
+                         content+= "<span>"+showPhone+"</span></p>";
+                     }
+
+                     content+= "<p><strong>修改密码</strong></p>";
+                     content+= "<p class='quit'><strong ><a href='/toViewName?viewName=logins'>退出登录</a></strong></p>";
+                     content+="</div>";
+                     content+="</div>";
+                     $(".collect").html(content);
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+    }
+
+    upateSigcard = function (userId) {
+        var sigcard=prompt("输入的内容","");
+        if (sigcard == null || sigcard == "") {
+            return ;
+        }
+        $.ajax({
+             url:'/upateSigcards',
+             type:'put',
+             data: {
+                userId: userId,
+                 sigcard: sigcard,
+             },
+             success:function (data) {
+                 queryInstall();
+
+             },error:function () {
+                 alert("ajax访问失败,请查看控制台");
+             }
+         });
+    };
+    upateEmail = function (userId) {
+        var sigcard=prompt("输入的内容","");
+        if (sigcard == null || sigcard == "") {
+            return ;
+        }
+        $.ajax({
+            url:'/upateEmails',
+            type:'put',
+            data: {
+                userId: userId,
+                email: sigcard,
+            },
+            success:function (data) {
+                queryInstall();
+
+            },error:function () {
+                alert("ajax访问失败,请查看控制台");
+            }
+        })
+    };
+    upatePhone = function (userId) {
+        var sigcard=prompt("输入的内容","");
+        if (sigcard == null || sigcard == "") {
+            return ;
+        }
+        $.ajax({
+            url:'/upatePhones',
+            type:'put',
+            data: {
+                userId: userId,
+                phone: sigcard,
+            },
+            success:function (data) {
+
+                queryInstall();
+
+            },error:function () {
+                alert("ajax访问失败,请查看控制台");
+            }
+        })
+    };
+    /*发布作品开始*/
+    addWorks=function () {
+
+       /* var userId = "[[${session.user.userId}]]";
+        $.ajax({
+            url:'/addWorks?userId='+userId,
+            type:'get',
+            success:function (data) {
+
+
+            },error:function () {
+                alert("ajax访问失败,请查看控制台");
+            }
+        })*/
+        var content = "";
+        content+="<div class='adworks'>";
+        content+= "<div class='title'><h2>发布作品</h2></div>";
+        content+= "<div class='texts'>";
+        content+= "<p><strong>标题:</strong><input type='text'></p>";
+        content+= "<p><strong>内容:</strong><textarea placeholder='请输入内容'></textarea></p>";
+        content+= "<p class='but'><button type='button'>发布</button></p>";
+        content+="</div>";
+        content+="</div>";
+        $(".collect").html(content);
+
+    }
+    /*发布作品结束*/
 </script>
 </html>

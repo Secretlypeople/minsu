@@ -60,6 +60,40 @@ img{width:290px;height:250px;border-radius: 8px;}
 .content .describe{margin:0 5px;}
 /*结束*/
 
+/*底部内容样式开始*/
+.footer{
+    width:100%;
+    height:auto;
+    border-top: 1px solid #c2c2c2;
+    clear: both;
+}
+.footer .zyhk{
+    width:60%;
+    margin: 0 auto;
+    padding: 3% 0;
+}
+.wjj2h{
+    float:left;
+    width: 25%;
+    height:200px;
+}
+.wjj2h ul{
+    padding:15px 0;
+    list-style: none;
+}
+.wjj2h ul li{
+    line-height: 30px;
+}
+.wjj2h ul a{
+    text-decoration: none;
+    font-weight: bolder;
+    color: #767676;
+}
+.wjj2h ul a:hover{
+    text-decoration:underline ;
+}
+/*底部内容样式结束*/
+
 
 
 

@@ -1,126 +1,243 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
-    <link rel="stylesheet" href="../index/css/shouye.css">
     <script src="../index/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=r1iF6A8vzRM7mzfuzVqaqN2RsXLipyOp"></script>
     <style>
-        .Xcontent06 img{
-            width:200px;
-            height: 200px;
+        *{
+            padding:0;
+            margin: 0;
         }
+        /*头部图片样式开始*/
+        .top{
+            width:100%;
+            height:505px;
+            border:1px solid #000000;
+        }
+        .top .top-img{
+            width:48%;
+            height:504px;
+            border:1px solid #000000;
+            float: left;
+            overflow:hidden;
+        }
+        .top .top-imgs{
+            width:25.75%;
+            height:251px;
+            overflow:hidden;
+            border:1px solid #0C0C0C;
+            float: left;
+
+        }
+        .top .top-img img:hover, .top .top-imgs img:hover{
+
+            transform: scale(1.1);
+            transition: all .5s ease;
+        }
+        /*图片样式结束*/
+        /*内容样式开始*/
+        .content{width:40%;margin:60px 20%;}
+        .title{border-bottom:1px #c2c2c2 solid;}
+        .title ul li{
+            list-style: none;
+            float: left;
+            font: 16px/18px '\5FAE\8F6F\96C5\9ED1';
+            position: relative;
+            left: 0;
+            bottom: 28px;
+            padding: 0 5px;/*文本的左右距离*/
+            padding-bottom: 10px;/*文本距离下划线的距离*/
+            color:rgb(0, 132, 137);
+            font-weight: bolder;
+        }
+        .title ul li:first-child{
+            border-bottom: 2px #333 solid;
+        }
+        .details{
+            width:400px;
+            height: 100px;
+            margin: 10px 0;
+
+        }
+        .evalu{
+            margin: 10px 0;
+            width: 200px;
+            height: 100px;
+        }
+        /*地图start*/
+        #allmap{height:500px;width:100%;}
+        /*end*/
+        .notice {padding: 10px 0;}
+        .notice p {line-height: 50px;}
+        .notice p span {padding: 0 15px}
+        /*内容样式结束*/
+        /*预约样式开始*/
+
+        /*预约样式结束*/
+        /*底部内容样式开始*/
+        .footer{
+            width:100%;
+            height:auto;
+            border-top: 1px solid #c2c2c2;
+        }
+        .footer .zyhk{
+            width:60%;
+            margin: 0 auto;
+            padding: 3% 0;
+        }
+        .wjj2h{
+            float:left;
+            width: 25%;
+            height:200px;
+        }
+        .wjj2h ul{
+            padding:15px 0;
+            list-style: none;
+        }
+        .wjj2h ul li{
+            line-height: 30px;
+        }
+        .wjj2h ul a{
+            text-decoration: none;
+            font-weight: bolder;
+            color: #767676;
+        }
+        .wjj2h ul a:hover{
+            text-decoration:underline ;
+        }
+        /*底部内容样式结束*/
     </style>
+
 </head>
-<script type="text/javascript">
-    var ii = 0;
 
-</script>
 <body>
+    <div class="top">
+        <div class="top-img">
+            <img src="http://imgmore1.oss-cn-beijing.aliyuncs.com/imgmore1/1577188780664.jpg"  width="100%" height="504px">
+        </div>
+        <div class="top-imgs">
+            <img src="http://imgmore1.oss-cn-beijing.aliyuncs.com/imgmore1/1577188780664.jpg"  width="100%" height="251">
+        </div>
+        <div class="top-imgs">
+            <img src="http://imgmore1.oss-cn-beijing.aliyuncs.com/imgmore1/1577188780664.jpg"  width="100%" height="251">
+        </div>
+        <div class="top-imgs">
+            <img src="http://imgmore1.oss-cn-beijing.aliyuncs.com/imgmore1/1577188780664.jpg"  width="100%" height="251">
+        </div>
+        <div class="top-imgs">
+            <img src="http://imgmore1.oss-cn-beijing.aliyuncs.com/imgmore1/1577188780664.jpg"  width="100%" height="251">
+        </div>
+    </div>
 
 
-<div class="Xcontent">
-    <ul class="Xcontent01">
-        <div class="Xcontent06"><img src="https://wyhazr.oss-cn-beijing.aliyuncs.com/wyhazr/1577452170428.jpg"></div>
-        <ol class="Xcontent08">
-            <div class="Xcontent07"><img src="https://wyhazr.oss-cn-beijing.aliyuncs.com/wyhazr/1577452170428.jpg"></div>
-            <div class="Xcontent09"><img src="https://wyhazr.oss-cn-beijing.aliyuncs.com/wyhazr/1577452170428.jpg"></div>
-            <div class="Xcontent10"><img src="https://wyhazr.oss-cn-beijing.aliyuncs.com/wyhazr/1577452170428.jpg"></div>
-            <div class="Xcontent11"><img src="https://wyhazr.oss-cn-beijing.aliyuncs.com/wyhazr/1577452170428.jpg"></div>
-            <div class="Xcontent12"><img src="https://wyhazr.oss-cn-beijing.aliyuncs.com/wyhazr/1577452170428.jpg"></div>
-        </ol>
-        <ol class="Xcontent13">
-            <div class="Xcontent14"><a href="#"><p>新物品</p></a></div>
-            <div class="Xcontent15"><img src=""></div>
-            <div class="Xcontent16"><p>充电5分钟，温暖2小时</p></div>
-            <div class="Xcontent17">
-                <p class="Xcontent18">售价</p>
-                <p class="Xcontent19">￥<span>69.00</span></p>
-                <div class="Xcontent20">
-                    <p class="Xcontent21">促销</p>
-                    <img src="">
-                    <p class="Xcontent22">领610元新年礼券，满再赠好礼</p>
-                </div>
-                <div class="Xcontent23">
-                    <p class="Xcontent24">服务</p>
-                    <p class="Xcontent25">30天无忧退货&nbsp;&nbsp;&nbsp;&nbsp;       48小时快速退款 &nbsp;&nbsp;&nbsp;&nbsp;        满88元免邮</p>
-                </div>
+    <main class="content">
+            <div class="title">
+                <ul>
+                    <li><a href="#details">详情</a></li>
+                    <li><a href="#evaluate ">评价</a></li>
+                    <li><a href="#site">位置</a></li>
+                    <li><a href="#notice">须知</a></li>
+                </ul>
+            </div>
+            <div class="details">
 
             </div>
-            <div class="Xcontent26">
-                <p class="Xcontent27">颜色</p>
-                <div class="Xcontent28"><img  src="https://wyhazr.oss-cn-beijing.aliyuncs.com/wyhazr/1577451692393.jpg"></div>
-                <div class="Xcontent29"><img  src="https://wyhazr.oss-cn-beijing.aliyuncs.com/wyhazr/1577452170428.jpg"></div>
+            <div class="evalu">
             </div>
-            <div class="Xcontent30">
-                <p class="Xcontent31">数量</p>
-                <div class="Xcontent32"><img src=""></div>
-                <form><input class="input" value="1"></form>
-                <div class="Xcontent33"><img src=""></div>
+            <div>
+                <div style="padding:5px 0 20px"><h3 id="site">位置</h3></div>
+                <div id="allmap"></div>
             </div>
-            <div class="Xcontent34"><a href="#"><img src=""></a></div>
-            <div class="Xcontent35"><a href="#"><img src=""></a></div>
-        </ol>
-    </ul>
-</div>
-<input type="hidden" id="id" th:value="${param?.id}">
+            <div class="notice ">
+                <p>
+                <h3 id="notice">须知</h3></p>
+                <p>
+                    <strong>基本要求</strong>
+                    <span>不允许携带宠物</span>
+                </p>
+                <p>
+                    <strong>取消政策</strong>
+                    <span>2月19日下午2点前取消，扣除首晚房费后，退还剩余房费和全部清洁费</span>
+                </p>
+                <p>
+                    <strong>安全须知</strong>
+                    <span class="_11dqbld7">该房源未安装烟雾报警器或一氧化碳报警器</span>
+                </p>
+                <p>
+                    <strong>交易提示</strong>
+                    <span class="_11dqbld7">若需要开具房费发票，请您与房东协商。</span>
+                </p>
+            </div>
+        </main>
+   </div>
+    <div class="present">
+
+    </div>
+
+    <div class="footer">
+        <div class="zyhk">
+            <div class="wjj2h">
+                <h4>爱彼迎</h4>
+                <ul>
+                    <li><a href="">工作机会</a></li>
+                    <li><a href="">爱彼迎新闻</a></li>
+                    <li><a href="">政策</a></li>
+                    <li><a href="">多元化与归属感</a></li>
+                    <li><a href="">无障碍设施</a></li>
+                </ul>
+            </div>
+            <div class="wjj2h">
+                <h4>发现</h4>
+                <ul>
+                    <li><a href="">信任与安全</a></li>
+                    <li><a href="">旅行基金</a></li>
+                    <li><a href="">爱彼迎公民</a></li>
+                    <li><a href="">商务差旅</a></li>
+                    <li><a href="">缤纷体验</a></li>
+                    <li><a href="">爱彼迎杂志</a></li>
+                </ul>
+            </div>
+            <div class="wjj2h">
+                <h4>出租</h4>
+                <ul>
+                    <li><a href="">为什么要出租?</a></li>
+                    <li><a href="">待客之道</a></li>
+                    <li><a href="">房东义务</a></li>
+                    <li><a href="">开展体验</a></li>
+                    <li><a href="">Open Homes</a></li>
+                </ul>
+            </div>
+            <div class="wjj2h">
+                <h4>客服支持</h4>
+                <ul>
+                    <li><a href="">帮助</a></li>
+                    <li><a href="">邻里支持</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
-<script>
-    $(document).ready(function(){
-        var $miaobian=$('.Xcontent08>div');
-        var $huantu=$('.Xcontent06>img');
-        var $miaobian1=$('.Xcontent26>div');
-        $miaobian.mousemove(function(){miaobian(this);});
-        $miaobian1.click(function(){miaobian1(this);});
-        function miaobian(thisMb){
-            for(var i=0; i<$miaobian.length; i++){
-                $miaobian[i].style.borderColor = '#dedede';
-            }
-            thisMb.style.borderColor = '#cd2426';
+<script type="text/javascript">
 
-            $huantu[0].src = thisMb.children[0].src;
+   // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point( 112.44752477,34.65736782);
+    map.centerAndZoom(point,12);
+
+    var geolocation = new BMap.Geolocation();
+    geolocation.getCurrentPosition(function(r){
+        if(this.getStatus() == BMAP_STATUS_SUCCESS){
+            var mk = new BMap.Marker(r.point);
+            map.addOverlay(mk);
+            map.panTo(r.point);
+            alert('您的位置：'+r.point.lng+','+r.point.lat);
         }
-        function miaobian1(thisMb1){
-            for(var i=0; i<$miaobian1.length; i++){
-                $miaobian1[i].style.borderColor = '#dedede';
-            }
-//		thisMb.style.borderColor = '#cd2426';
-            $miaobian.css('border-color','#dedede');
-            thisMb1.style.borderColor = '#cd2426';
-            $huantu[0].src = thisMb1.children[0].src;
+        else {
+            alert('failed'+this.getStatus());
         }
-        $(".Xcontent33").click(function(){
-            var value=parseInt($('.input').val())+1;
-            $('.input').val(value);
-        })
+    },{enableHighAccuracy: true})
 
-        $(".Xcontent32").click(function(){
-            var num = $(".input").val()
-            if(num>0){
-                $(".input").val(num-1);
-            }
-        })
-    })
-
-    function queryHouseById() {
-
-        var id = $("#id").val();
-         $.ajax({
-                 url:'../queryHouseById',
-                 type:'get',
-                 data:{id:id},
-                 success:function (data) {
-
-
-
-                 },error:function () {
-                     alert("ajax访问失败,请查看控制台");
-                 }
-
-                 })
-
-
-
-    }
 </script>
 </html>

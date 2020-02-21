@@ -11,8 +11,8 @@ public class Pinglun {
     private Integer sotyId;
     private Integer userId;
     private  String userName;
-    private int like;
     private String img;
+    private int like;
 
     public String getId() {
         return id;

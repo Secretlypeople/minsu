@@ -3,6 +3,7 @@ package com.jk.controller;
 import com.jk.dto.Content;
 import com.jk.dto.Story;
 import com.jk.dto.User;
+import com.jk.dto.UserInfo;
 import com.jk.repository.HomeRepository;
 import com.jk.service.HomeServiceFeign;
 import com.jk.utils.CheckImgUtil;
@@ -20,10 +21,7 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -221,6 +219,44 @@ public class HomeController {
         Story story = serviceFeign.queryStoryById(id);
         return story;
     }
+
+    @GetMapping("queryMyworks")
+    public List<Story> queryMyworks(Integer userId) {
+
+        List<Story> list = serviceFeign.queryMyworks(userId);
+        return list;
+    }
+
+    @GetMapping("queryInstalls")
+    public UserInfo queryInstall(Integer userId) {
+
+        UserInfo userInfo = serviceFeign.queryInstall(userId);
+        return userInfo;
+    }
+
+    @PutMapping("upateSigcards")
+    public String upateSigcard(UserInfo userInfo) {
+
+       serviceFeign.upateSigcard(userInfo);
+        return "success";
+    }
+
+    @PutMapping("upateEmails")
+    public String upateEmail(UserInfo userInfo) {
+
+        serviceFeign.upateEmail(userInfo);
+        return "success";
+    }
+
+    @PutMapping("upatePhones")
+    public String upatePhone(UserInfo userInfo) {
+
+        serviceFeign.upatePhone(userInfo);
+        return "success";
+    }
+
+
+
 
 
 

@@ -1,10 +1,7 @@
 package com.jk.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.jk.dto.Content;
-import com.jk.dto.Order;
-import com.jk.dto.Story;
-import com.jk.dto.User;
+import com.jk.dto.*;
 import com.jk.service.HomeService;
 import com.jk.service.HomeServices;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -48,9 +45,37 @@ public class HomeController implements  HomeServices {
     }
 
     @Override
+    @GetMapping("queryStoryById")
     public Story queryStoryById(Integer id) {
 
         return homeService.queryStoryById(id);
+    }
+
+    @Override
+    @GetMapping("queryMywork")
+    public List<Story> queryMyworks(Integer userId) {
+        return homeService.queryMyworks(userId);
+    }
+
+    @Override
+    @GetMapping("queryInstall")
+    public UserInfo queryInstall(Integer userId) {
+        return homeService.queryInstall(userId);
+    }
+
+    @Override
+    public void upateSigcard(UserInfo userInfo) {
+        homeService.upateSigcard(userInfo);
+    }
+
+    @Override
+    public void upateEmail(UserInfo userInfo) {
+        homeService.upateEmail(userInfo);
+    }
+
+    @Override
+    public void upatePhone(UserInfo userInfo) {
+        homeService.upatePhone(userInfo);
     }
 
 

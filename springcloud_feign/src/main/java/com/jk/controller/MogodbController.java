@@ -2,7 +2,6 @@ package com.jk.controller;
 
 import com.jk.dto.*;
 import com.jk.service.HomeServiceFeign;
-import com.jk.utils.CheckImgUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -42,7 +41,7 @@ public class MogodbController {
                 pinglun.setCreateTime(sdf1.format(new Date()));
                 pinglun.setUserId(user.getUserId());
                 pinglun.setUserName(user.getUsername());
-                pinglun.setImg(user.getImg());
+                /*pinglun.setImg(user.getImg());*/
                  pinglun.setLike(0);
                 mongoTemplate.save(pinglun);
                 return "2";
@@ -111,8 +110,9 @@ public class MogodbController {
         User user = (User) session.getAttribute("user");
         if (user.getUserId()!= 0) {
 
-            boolean b = queryCollectOne(storyId);
+            boolean b = queryCollectOne(storyId,userId);
             if (b) {
+
                 return "2";
             }else{
 
@@ -142,10 +142,11 @@ public class MogodbController {
      * @return
      */
     @GetMapping("queryCollectOne")
-    public boolean queryCollectOne(Integer storyId) {
+    public boolean queryCollectOne(Integer storyId,Integer userId) {
 
         Query query = new Query();
         query.addCriteria(Criteria.where("storyId").is(storyId));
+        query.addCriteria(Criteria.where("userId").is(userId));
         Collect collect = mongoTemplate.findOne(query, Collect.class);
         if (collect != null) {
             return true;
@@ -154,6 +155,8 @@ public class MogodbController {
             return false;
         }
     }
+
+
 
     @GetMapping("queryCollect")
     public List<Collect> queryCollect(Integer userId) {
@@ -179,23 +182,52 @@ public class MogodbController {
         return "success";
     }
 
-   /* @GetMapping("addFouc")
-    public String addFouc(Fouc fouc, HttpSession session) {
+    @GetMapping("addFouc")
+   public String addFouc(Integer myUserId,Integer userId,String username,HttpSession session) {
 
-        User user = (User) session.getAttribute("user");
-        if (user.getUserId() != null) {
+       User user = (User) session.getAttribute("user");
+       if (user.getUserId() != 0) {
+           boolean b = myFocus(userId);
+           if (b) {
+               return "2";
+           }else{
+               Fouc fouc = new Fouc();
+               SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+               fouc.setCreateDate(sdf1.format(new Date()));
+               fouc.setUserId(userId);
+               fouc.setMyUserId(myUserId);
+               mongoTemplate.save(fouc);
 
-            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            fouc.setSelfId(user.getUserId());
-            fouc
+               return "3";
+           }
 
+
+       }else{
+
+          return "1";
+      }
+   }
+
+    public boolean myFocus(Integer userId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(userId));
+        Fouc fouc = mongoTemplate.findOne(query, Fouc.class);
+        if (fouc!= null) {
+          return true;
         }else{
-
-            return "1";
+            return false;
         }
-    }*/
 
+    }
 
+    @GetMapping("queryMyFocus")
+    public List<Fouc> queryMyFocus(Integer myUserId) {
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("myUserId").is(myUserId));
+        List<Fouc> list = mongoTemplate.find(query, Fouc.class);
+        return list;
+    }
 
 
 

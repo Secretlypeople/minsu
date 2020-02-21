@@ -223,6 +223,7 @@
     });
 
     function  queryStoryById() {
+        var userId = "[[${session.user.userId}]]";
         var id = $("#id").val();
          $.ajax({
                  url:'../queryStoryByIds',
@@ -238,11 +239,11 @@
                      conent += "<div ><span >"+data.createTime+"</span></div>";
                      conent+="</div>";
                      $(".guan-user").html(conent);
-
-                     var co = "";
-                         co+="<button type='button' onclick='addFouc("+data.userId+")'>关注</button>";
-                     $(".guan-buttons").html(co);
-
+                     if (userId!= data.userId) {
+                         var co = "";
+                         co+="<button type='button' onclick='addFouc("+data.userId+",\""+data.username+"\")'>关注</button>";
+                         $(".guan-buttons").html(co);
+                     }
 
                      var content = "";
                      content+="<div id='img'><img src="+data.img+"></div>";
@@ -252,7 +253,7 @@
                      content+="<div style='margin-top: 15px' class='ping'><button type='button' onclick='addPinglun()'>回复</button></div>";
                      content+="<div class='dands'>"
                      content+="<button type='button'  >点赞</button>"
-                     content+="<button type='button'  onclick='addCollect()' >收藏</button></div>"
+                     content+="<button id='butto' type='button'  onclick='addCollect()' >收藏</button></div>"
                      $(".story").html(content);
 
 
@@ -263,15 +264,20 @@
                  })
     }
 
-    addFouc = function (userId) {
-
+    addFouc = function (userId,username) {
+        var id = "[[${session.user.userId}]]";
          $.ajax({
                  url:'/addFouc',
-                 type:'post',
-                 data:{userId:userId},
+                 data:{userId:userId,username:username,myUserId:id},
                  success:function (data) {
 
-
+                     if (data == 1) {
+                         location.href = "/toViewName?viewName=logins";
+                     }else if(data==2){
+                         alert("已关注");
+                     }else{
+                         alert("关注成功");
+                     }
 
                  },error:function () {
                      alert("ajax访问失败,请查看控制台");
@@ -293,8 +299,8 @@
                      if (data == 1) {
                          location.href = "/toViewName?viewName=logins";
                      }else if(data==2){
-                         alert("请不要重复收藏");
 
+                         alert("请不要重复收藏");
                      }else{
                          alert("收藏成功");
                      }
@@ -347,12 +353,14 @@
     }
 
     function  queryPinglun() {
+        var userId = "[[${session.user.userId}]]";
         var id = $("#id").val();
          $.ajax({
                  url:'../queryPinglun',
                  type:'get',
                  data:{sotyId:id},
                  success:function (data) {
+                     console.log(data);
                      var conentts="<div><span style='color:blue'>"+data.length+"条评论</span></div>";
                      var content = "";
                      for (var i = 0; i <data.length ; i++) {
@@ -367,20 +375,50 @@
                          content += "<div class='date-dz'>";
                          content += "<span class='date-dz-left pull-left comment-time'>"+data[i].createTime+"</span>";
                          content += "<div class='date-dz-right pull-right comment-pl-block'>";
-                         content +="<a class='removeBlock' href='javascript:deletePinglun(\""+data[i].id+"\")'>删除</a>";
-                         content += "<a href='javascript:queryHuifu(\""+data[i].id+"\");' class='date-dz-pl pl-hf hf-con-block pull-left'>回复</a>";
-                         content += "<span class='pull-left date-dz-line'>|</span>";
-                         content += "<a href='javascript:updateLike(\""+data[i].id+"\","+data[i].like+");' class='date-dz-z pull-left'><i class='date-dz-z-click-red'></i>赞"+data[i].like+"</a>";
-                         content += "</div>";
-                         content += "</div>";
-                         content += "<div class='hf-list-con'></div>";
-                         content += "</div>";
-                         content += "</div>";
-                         content += "</div>";
+                         if (userId== data[i].userId) {
+                             content +="<a class='removeBlock' href='javascript:deletePinglun(\""+data[i].id+"\")'>删除</a>";
+                             content += "</div>";
+                             content += "</div>";
+                             content += "<div class='hf-list-con'></div>";
+                             content += "</div>";
+                             content += "</div>";
+                             content += "</div>";
+                         }else{
+                             content += "<a href='javascript:addHuifu(\""+data[i].id+"\","+data[i].userId+");' class='date-dz-pl pl-hf hf-con-block pull-left'>回复</a>";
+                             content += "<span class='pull-left date-dz-line'>|</span>";
+                             content += "<a href='javascript:updateLike(\""+data[i].id+"\","+data[i].like+");' class='date-dz-z pull-left'><i class='date-dz-z-click-red'></i>赞"+data[i].like+"</a>";
+                             content += "</div>";
+                             content += "</div>";
+                             content += "<div class='hf-list-con'></div>";
+                             content += "</div>";
+                             content += "</div>";
+                             content += "</div>";
+
+                         }
+
+
+
 
                      }
                      $('#div').html(conentts);
                      $('.pinglun').html(content);
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+
+    }
+
+    addHuifu=function (id,userId) {
+
+         $.ajax({
+                 url:'/addHuifu',
+                 data:{id:userId},
+                 success:function (data) {
+
+
 
                  },error:function () {
                      alert("ajax访问失败,请查看控制台");

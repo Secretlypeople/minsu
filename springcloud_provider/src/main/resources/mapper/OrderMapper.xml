@@ -14,7 +14,8 @@
 
     <!-- User login(String username);-->
     <select id="login" resultType="com.jk.dto.User" parameterType="java.lang.String">
-     select * from t_user where username=#{username} or phone=#{phone}
+    select * from t_user t
+    left join t_user_info tu on t.userId=tu.userId where tu.userId=t.userId and username=#{username}
 
     </select>
 
@@ -37,5 +38,38 @@
 
     </select>
 
+    <!--List<Story> queryMyworks(Integer userId);-->
+    <select id="queryMyworks" resultType="com.jk.dto.Story" parameterType="java.lang.Integer">
+
+        select * from t_story where userId=#{userId}
+    </select>
+
+    <!-- User queryInstall(Integer userId);-->
+    <select id="queryInstall" resultType="com.jk.dto.UserInfo" parameterType="java.lang.Integer">
+
+        select t.username userName,tu.* from t_user t
+        left join t_user_info tu on t.userId=tu.userId
+        where tu.userId=#{userId}
+    </select>
+
+    <!--  void upateSigcard(UserInfo userInfo);-->
+    <update id="upateSigcard" >
+        update t_user_info
+         set sigcard=#{sigcard}
+         where userId=#{userId}
+    </update>
+
+   <!-- void upateEmail(UserInfo userInfo);-->
+    <update id="upateEmail" >
+        update t_user_info
+         set email=#{email}
+         where userId=#{userId}
+    </update>
+  <!--  void upatePhone(UserInfo userInfo);-->
+    <update id="upatePhone" >
+        update t_user_info
+         set phone=#{phone}
+         where userId=#{userId}
+    </update>
 
 </mapper>

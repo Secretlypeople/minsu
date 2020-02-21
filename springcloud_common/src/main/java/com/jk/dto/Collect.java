@@ -11,7 +11,6 @@ public class Collect {//收藏列表
     private String createTime;//创建时间
     private Integer storyId;//精选故事id
     private Integer userId;
-
     public String getId() {
         return id;
     }

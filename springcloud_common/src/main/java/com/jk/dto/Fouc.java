@@ -7,9 +7,8 @@ public class Fouc {
 
     private String id;
     private  Integer userId;
-    private Integer selfId;
+    private  Integer myUserId;
     private String createDate;
-    private Integer count;
 
     public String getId() {
         return id;
@@ -27,12 +26,12 @@ public class Fouc {
         this.userId = userId;
     }
 
-    public Integer getSelfId() {
-        return selfId;
+    public Integer getMyUserId() {
+        return myUserId;
     }
 
-    public void setSelfId(Integer selfId) {
-        this.selfId = selfId;
+    public void setMyUserId(Integer myUserId) {
+        this.myUserId = myUserId;
     }
 
     public String getCreateDate() {
@@ -43,22 +42,13 @@ public class Fouc {
         this.createDate = createDate;
     }
 
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
-    }
-
     @Override
     public String toString() {
         return "Fouc{" +
                 "id='" + id + '\'' +
                 ", userId=" + userId +
-                ", selfId=" + selfId +
+                ", myUserId=" + myUserId +
                 ", createDate='" + createDate + '\'' +
-                ", count=" + count +
                 '}';
     }
 }

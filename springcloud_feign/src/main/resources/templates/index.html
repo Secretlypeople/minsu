@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="../index/css/main.css">
     <script src="../index/jquery-2.1.1.min.js"></script>
     <script src="../laydate/laydate.js"></script>
-
     <script>
         lay('#version').html('-v'+ laydate.v);
         /*日期范围*/
@@ -15,6 +14,7 @@
             elem: '#test6'
             ,range: true
         });
+
     </script>
     <style>
         .es{width:70%;margin: 0 auto;height:70px;background: #FFF;top: 100px;position:absolute;left:15%;top:50%;border-radius:5px}
@@ -54,7 +54,7 @@
             <div class="banner-box">
                 <div class="banner">
                     <!--导航开始-->
-                    <nav class="nav">
+                    <div class="nav">
                         <ul>
                         <li><a href="" >首页</a></li>
                         <li class="deng"></li>
@@ -62,7 +62,7 @@
                         <li><a href="javascript:presionCenter()" >个人中心</a></li>
                         <li><a href="" >联系我们</a></li>
                         </ul>
-                    </nav>
+                    </div>
                     <div class="es">
                         <div class="house">房源</div>
                         <div class="text"><input type="text" id="content" placeholder="请输入搜索内容"></div>
@@ -128,6 +128,48 @@
 
         </div>
     </div>
+    <div class="footer">
+        <div class="zyhk">
+            <div class="wjj2h">
+                <h4>爱彼迎</h4>
+                <ul>
+                    <li><a href="">工作机会</a></li>
+                    <li><a href="">爱彼迎新闻</a></li>
+                    <li><a href="">政策</a></li>
+                    <li><a href="">多元化与归属感</a></li>
+                    <li><a href="">无障碍设施</a></li>
+                </ul>
+            </div>
+            <div class="wjj2h">
+                <h4>发现</h4>
+                <ul>
+                    <li><a href="">信任与安全</a></li>
+                    <li><a href="">旅行基金</a></li>
+                    <li><a href="">爱彼迎公民</a></li>
+                    <li><a href="">商务差旅</a></li>
+                    <li><a href="">缤纷体验</a></li>
+                    <li><a href="">爱彼迎杂志</a></li>
+                </ul>
+            </div>
+            <div class="wjj2h">
+                <h4>出租</h4>
+                <ul>
+                    <li><a href="">为什么要出租?</a></li>
+                    <li><a href="">待客之道</a></li>
+                    <li><a href="">房东义务</a></li>
+                    <li><a href="">开展体验</a></li>
+                    <li><a href="">Open Homes</a></li>
+                </ul>
+            </div>
+            <div class="wjj2h">
+                <h4>客服支持</h4>
+                <ul>
+                    <li><a href="">帮助</a></li>
+                    <li><a href="">邻里支持</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
 <script type="text/javascript">
 
@@ -146,7 +188,7 @@
     });
     presionCenter=function () {
         var userId = "[[${session.user.userId}]]";
-        if (userId==-1) {
+        if (userId==0) {
             location.href = "/toViewName?viewName=logins";
         }else{
             location.href = "/toViewName?viewName=center";

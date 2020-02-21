@@ -8,9 +8,9 @@ eureka:
     register-with-eureka: false
     fetch-registry: false
     #读取超时
-    eureka-server-read-timeout-seconds: 8
+    #eureka-server-read-timeout-seconds: 8
     #连接超时
-    eureka-server-connect-timeout-seconds: 8
+    #eureka-server-connect-timeout-seconds: 8
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
     server:
